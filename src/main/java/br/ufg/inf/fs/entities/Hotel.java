@@ -1,7 +1,5 @@
 package br.ufg.inf.fs.entities;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,10 +9,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="tb_hotel")
-public class Hotel implements Serializable{
+public class Hotel {
 
-	private static final long serialVersionUID = 1L;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_hotel")
@@ -24,7 +20,7 @@ public class Hotel implements Serializable{
 	private String nmHotel;
 	
 	private String endereco;
-	
+
 	@Column(name="quantidade_estrelas")
 	private Integer qtdEstrelas;
 	
@@ -32,10 +28,10 @@ public class Hotel implements Serializable{
 		super();
 	}
 
-	public Hotel(Integer idHotel, String nmNotel, String endereco, Integer qtdEstrelas) {
+	public Hotel(Integer idHotel, String nmHotel, String endereco, Integer qtdEstrelas) {
 		super();
 		this.idHotel = idHotel;
-		this.nmHotel = nmNotel;
+		this.nmHotel = nmHotel;
 		this.endereco = endereco;
 		this.qtdEstrelas = qtdEstrelas;
 	}
@@ -52,8 +48,8 @@ public class Hotel implements Serializable{
 		return nmHotel;
 	}
 
-	public void setNmHotel(String nmNotel) {
-		this.nmHotel = nmNotel;
+	public void setNmHotel(String nmHotel) {
+		this.nmHotel = nmHotel;
 	}
 
 	public String getEndereco() {
@@ -74,9 +70,8 @@ public class Hotel implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Hotel [idHotel=" + idHotel + ", nmNotel=" + nmHotel + ", endereco=" + endereco + ", qtdEstrelas="
+		return "Hotel [idHotel=" + idHotel + ", nmHotel=" + nmHotel + ", endereco=" + endereco + ", qtdEstrelas="
 				+ qtdEstrelas + "]";
 	}
-	
 	
 }

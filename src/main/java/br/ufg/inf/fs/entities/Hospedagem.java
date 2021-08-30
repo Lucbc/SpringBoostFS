@@ -1,6 +1,6 @@
 package br.ufg.inf.fs.entities;
 
-import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,10 +12,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="tb_hospedagem")
-public class Hospedagem implements Serializable{
+public class Hospedagem {
 
-	private static final long serialVersionUID = 1L;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_hospedagem")
@@ -23,27 +21,27 @@ public class Hospedagem implements Serializable{
 	
 	@OneToOne
 	@JoinColumn(name="id_quarto")
-	private Quarto quarto;
-	
+	private Quarto idQuarto;
+
 	@OneToOne
 	@JoinColumn(name="id_hospede")
-	private Hospede hospede;
+	private Hospede idHospede;
 	
 	@Column(name="dt_checkin")
 	private String dtCheckin;
 	
 	@Column(name="dt_checkout")
 	private String dtCheckout;
-	
+
 	public Hospedagem() {
 		super();
 	}
 
-	public Hospedagem(Integer idHospedagem, Quarto quarto, Hospede hospede, String dtCheckin,String dtCheckout) {
+	public Hospedagem(Integer idHospedagem, Quarto idQuarto, Hospede idHospede, String dtCheckin,String dtCheckout) {
 		super();
 		this.idHospedagem = idHospedagem;
-		this.quarto = quarto;
-		this.hospede = hospede;
+		this.idQuarto = idQuarto;
+		this.idHospede = idHospede;
 		this.dtCheckin = dtCheckin;
 		this.dtCheckout = dtCheckout;
 	}
@@ -56,20 +54,20 @@ public class Hospedagem implements Serializable{
 		this.idHospedagem = idHospedagem;
 	}
 
-	public Quarto getQuarto() {
-		return quarto;
+	public Quarto getIdQuarto() {
+		return idQuarto;
 	}
 
-	public void setQuarto(Quarto quarto) {
-		this.quarto = quarto;
+	public void setIdQuarto(Quarto idQuarto) {
+		this.idQuarto = idQuarto;
 	}
 
-	public Hospede getHospede() {
-		return hospede;
+	public Hospede getIdHospede() {
+		return idHospede;
 	}
 
-	public void setHospede(Hospede hospede) {
-		this.hospede = hospede;
+	public void setIdHospede(Hospede idHospede) {
+		this.idHospede = idHospede;
 	}
 
 	public String getDtCheckin() {
@@ -88,14 +86,9 @@ public class Hospedagem implements Serializable{
 		this.dtCheckout = dtCheckout;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	@Override
 	public String toString() {
-		return "Hospedagem [idHospedagem=" + idHospedagem + ", quarto=" + quarto + ", dtCheckin=" + dtCheckin
-				+ ", dtCheckout=" + dtCheckout + "]";
+		return "Hospedagem [idHospedagem=" + idHospedagem + ", idQuarto=" + idQuarto + ", idHospede=" + idHospede
+				+ ", dtCheckin=" + dtCheckin + ", dtCheckout=" + dtCheckout + "]";
 	}	
-	
 }

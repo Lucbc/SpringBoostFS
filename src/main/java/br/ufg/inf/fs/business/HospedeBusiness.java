@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.ufg.inf.fs.entities.Hospede;
+import br.ufg.inf.fs.exceptions.HospedeException;
 import br.ufg.inf.fs.repositories.HospedeRepository;
 
 @Service
@@ -19,16 +20,18 @@ public class HospedeBusiness {
 		return repository.findAll();		
 	}
 	
-	public Hospede findById(Integer id) {
+	public Hospede findByIdHospede(Integer id) {
 		Optional<Hospede> retorno = repository.findById(id);
 		return retorno.get();
 	}
 	
-	public Hospede insert(Hospede hospede) {
+	public Hospede insert(Hospede hospede) throws HospedeException {
+		this.validaHospede(hospede);
 		return repository.save(hospede);
 	}
 	
-	public Hospede update(Hospede hospede) {
+	public Hospede update(Hospede hospede) throws HospedeException {
+		this.validaHospede(hospede);
 		return repository.save(hospede);
 	}
 	
@@ -36,4 +39,16 @@ public class HospedeBusiness {
 		repository.deleteById(id);
 	}
 	
+	
+	private void validaHospede(Hospede hospede) throws HospedeException {
+		if(hospede.getIdHospede() == null || hospede.getIdHospede() == 0) {
+			throw new HospedeException("0308");
+		}
+		if(hospede.getNmHospede() == null || hospede.getNmHospede().length() == 0) {
+			throw new HospedeException("0309");
+		}
+		if(hospede.getCpf() == null || hospede.getCpf() == 0) {
+			throw new HospedeException("0310");
+		}
+	}
 }

@@ -1,6 +1,5 @@
 package br.ufg.inf.fs.entities;
 
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,34 +9,32 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="tb_hospede")
-public class Hospede implements Serializable{
+public class Hospede {
 
-	private static final long serialVersionUID = 1L;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_hospede")
 	private Integer idHospede;
 	
-	@Column(name="nome_hospede")
+	@Column(name="nome_hotel")
 	private String nmHospede;
-	
-	@Column(name="dt_nascimento")
-	private String dtNascimento;
-	
+
 	@Column(name="cpf")
 	private Integer cpf;
 	
+	@Column(name="dt_nascimento")
+	private String dtNascimento;
+
 	public Hospede() {
 		super();
 	}
 
-	public Hospede(Integer idHospede, String nmHospede, String dtNascimento, Integer cpf) {
+	public Hospede(Integer idHospede, String nmHospede, Integer cpf, String dtNascimento) {
 		super();
 		this.idHospede = idHospede;
 		this.nmHospede = nmHospede;
-		this.dtNascimento = dtNascimento;
 		this.cpf = cpf;
+		this.dtNascimento = dtNascimento;
 	}
 
 	public Integer getIdHospede() {
@@ -56,14 +53,6 @@ public class Hospede implements Serializable{
 		this.nmHospede = nmHospede;
 	}
 
-	public String getdtNascimento() {
-		return dtNascimento;
-	}
-
-	public void setDtNascimento(String dtNascimento) {
-		this.dtNascimento = dtNascimento;
-	}
-
 	public Integer getCpf() {
 		return cpf;
 	}
@@ -72,14 +61,21 @@ public class Hospede implements Serializable{
 		this.cpf = cpf;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public String getDtNascimento() {
+		return dtNascimento;
+	}
+
+	public void setDtNascimento(String dtNascimento) {
+		this.dtNascimento = dtNascimento;
 	}
 
 	@Override
 	public String toString() {
-		return "Hospede [idHospede=" + idHospede + ", nmHospede=" + nmHospede + ", dtNascimento=" + dtNascimento + ", cpf="
-				+ cpf + "]";
+		return "Hospede [idHospede=" + idHospede + ", nmHospede=" + nmHospede + ", cpf=" + cpf + ", dtNascimento="
+				+ dtNascimento + "]";
 	}
+	
+	
+
 	
 }
