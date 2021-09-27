@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.ufg.inf.fs.Messages;
 import br.ufg.inf.fs.business.HospedeBusiness;
 import br.ufg.inf.fs.entities.Hospede;
+import br.ufg.inf.fs.entities.Hotel;
 import br.ufg.inf.fs.exceptions.HospedeException;
 
 @RestController
@@ -28,6 +32,7 @@ public class HospedeCtrl {
 	@Autowired
 	private HospedeBusiness business;
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping
 	public ResponseEntity<List<Hospede>> findAll(){
 		HttpHeaders headers = new HttpHeaders();
@@ -45,6 +50,25 @@ public class HospedeCtrl {
 		return new ResponseEntity<List<Hospede>>(list, headers, status);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/paginator")
+	public ResponseEntity<Page<Hospede>> paginator(Pageable pageable){
+		HttpHeaders headers = new HttpHeaders();
+		HttpStatus status = HttpStatus.OK;
+		Page<Hospede> list = null;
+		try {
+			list = business.paginator(pageable);
+			if(list.getSize() == 0) {
+				headers.add("message", Messages.get("0107"));
+			}
+		}catch (Exception e) {
+			status = HttpStatus.BAD_REQUEST;
+			headers.add("message", Messages.get("0002"));
+		}
+		return new ResponseEntity<Page<Hospede>>(list, headers, status);
+	}
+	
+	@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
 	@GetMapping("/{id}")
 	public ResponseEntity<Hospede> findById(@PathVariable Integer id){
 		Hospede retorno = new Hospede();
@@ -63,7 +87,7 @@ public class HospedeCtrl {
 		return new ResponseEntity<Hospede>(retorno, headers, status);
 	}
 	
-	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<Hospede> insert(@RequestBody Hospede hospede){
 		HttpHeaders headers = new HttpHeaders();
@@ -82,6 +106,7 @@ public class HospedeCtrl {
 		return new ResponseEntity<Hospede>(hospede, headers, status);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping
 	public ResponseEntity<Hospede> update(@RequestBody Hospede hospede){
 		
@@ -103,6 +128,7 @@ public class HospedeCtrl {
 		
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		HttpHeaders headers = new HttpHeaders();

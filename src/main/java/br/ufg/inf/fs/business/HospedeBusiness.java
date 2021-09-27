@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.ufg.inf.fs.entities.Hospede;
@@ -18,6 +20,10 @@ public class HospedeBusiness {
 	
 	public List<Hospede> findAll(){
 		return repository.findAll();		
+	}
+	
+	public Page<Hospede> paginator(Pageable pageable){
+		return repository.findAll(pageable);
 	}
 	
 	public Hospede findByIdHospede(Integer id) {
@@ -47,7 +53,7 @@ public class HospedeBusiness {
 		if(hospede.getNmHospede() == null || hospede.getNmHospede().length() == 0) {
 			throw new HospedeException("0309");
 		}
-		if(hospede.getCpf() == null || hospede.getCpf() == 0) {
+		if(hospede.getCpf() == null || hospede.getCpf().length() == 0) {
 			throw new HospedeException("0310");
 		}
 	}

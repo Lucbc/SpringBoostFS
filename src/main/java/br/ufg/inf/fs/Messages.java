@@ -7,7 +7,7 @@ import java.util.Properties;
 public final class Messages {
 
 	public static Properties props = load();
-	
+
 	private static Properties load() {
 		Properties props = new Properties();
 		try {
@@ -19,11 +19,11 @@ public final class Messages {
 		}
 		return props;
 	}
-	
+
 	public static String get(String key) {
 		System.out.println(key);
 		System.out.println(props);
 		return props.getProperty(key);
 	}
-	
+
 }

@@ -16,4 +16,5 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer>{
 	
 	@Query("SELECT h FROM Hotel h WHERE h.qtdEstrelas = :qtd")
 	public List<Hotel> findByQtdEstelas(@Param("qtd") Integer qtd);
+
 }

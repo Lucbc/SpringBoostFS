@@ -1,9 +1,15 @@
 package br.ufg.inf.fs;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import br.ufg.inf.fs.entities.Hospedagem;
 import br.ufg.inf.fs.entities.Hospede;
@@ -14,6 +20,10 @@ import br.ufg.inf.fs.repositories.HotelRepository;
 import br.ufg.inf.fs.repositories.QuartoRepository;
 import br.ufg.inf.fs.repositories.HospedagemRepository;
 import br.ufg.inf.fs.repositories.HospedeRepository;
+import br.ufg.inf.fs.entities.Regra;
+import br.ufg.inf.fs.entities.Usuario;
+import br.ufg.inf.fs.repositories.RegraRepository;
+import br.ufg.inf.fs.repositories.UsuarioRepository;
 
 @Configuration
 @Profile("dev")
@@ -31,6 +41,13 @@ public class Config  implements CommandLineRunner{
 	@Autowired
 	private HospedagemRepository hospedagemRepository;
 	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+
+	@Autowired
+	private RegraRepository regraRepository;
+	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
@@ -38,6 +55,17 @@ public class Config  implements CommandLineRunner{
 		/*
 		 * INSERIR NO MEU BANCO DE DADOS INFORMAÇÕES INICIAIS...
 		 * */
+		
+		String[] tipoH = new String[] {"Hotel","Pousada","Resort","Hostel","Pensão"};
+		String[] nomeH = new String[] {"Dos Passados","Das Emas","Dos Imigrantes","Da Alegria","Da cidade"};
+		String[] localH = new String[] {"Goiânia","Anapolis","Brasilia","Trindade","Jatai"};
+		
+		for(int i = 0; i < 100; i++) {
+			
+			hoteRepository.save(new Hotel(null,tipoH[new Random().nextInt(5)]+ " " + nomeH[new Random().nextInt(5)],
+								localH[new Random().nextInt(5)],
+								new Random().nextInt(5) + 1));
+		}
 		
 		Hotel h1 = new Hotel(null, "Calderão Furado", "Beco Diagonal", 3);
 		Hotel h2 = new Hotel(null, "Bates Hotel", "White Pine Bay", 2);
@@ -59,25 +87,77 @@ public class Config  implements CommandLineRunner{
 		q3 = quartoRepository.save(q3);
 		q4 = quartoRepository.save(q4);
 		
-		Hospede p1 = new Hospede(null, "Joao Luiz", 454545, "01/05/1990");
-		Hospede p2 = new Hospede(null, "Julia Santana", 787878, "22/10/1992");
-		Hospede p3 = new Hospede(null, "José Carlos", 121212, "15/03/1987");
-		Hospede p4 = new Hospede(null, "Jade Santos", 989898, "07/12/2000");
+		String[] nomeHospede = new String[] {"João","José","Joana","Carlos","Gustavo"};
+		String[] sobreNomeHospede = new String[] {"Lucas","Silva","Maria","Eduardo","Moreira"};
+		String[] cpfHospede = new String[] {"123456","123789","456789","789456","987321"};
+		String[] diaNascH = new String[] {"05","10","15","20","25"};
+		String[] mesNascH = new String[] {"01","02","03","05","07"};
+		String[] anoNascH = new String[] {"1990","1985","1995","2000","1980"};
+		
+		for(int i = 0; i < 100; i++) {
+			
+			hospedeRepository.save(new Hospede(null,nomeHospede[new Random().nextInt(5)]+ " " +
+					sobreNomeHospede[new Random().nextInt(5)],cpfHospede[new Random().nextInt(5)],diaNascH[new Random().nextInt(5)] + "/" + mesNascH[new Random().nextInt(5)] + "/" + anoNascH[new Random().nextInt(5)]));
+
+		}
+		
+		Hospede p1 = new Hospede(null, "Joao Luiz", "454545", "01/05/1990");
+		Hospede p2 = new Hospede(null, "Julia Santana", "787878", "22/10/1992");
+		Hospede p3 = new Hospede(null, "José Carlos", "121212", "15/03/1987");
+		Hospede p4 = new Hospede(null, "Jade Santos", "989898", "07/12/2000");
 		
 		p1 = hospedeRepository.save(p1);
 		p2 = hospedeRepository.save(p2);
 		p3 = hospedeRepository.save(p3);
 		p4 = hospedeRepository.save(p4);
 		
-		Hospedagem r1 = new Hospedagem(null, q1, p1, "20/09/2021", "25/09/2021");
-		Hospedagem r2 = new Hospedagem(null, q2, p2, "10/10/2021", "18/10/2021");
-		Hospedagem r3 = new Hospedagem(null, q3, p3, "01/09/2021", "30/09/2021");
-		Hospedagem r4 = new Hospedagem(null, q4, p4, "01/12/2021", "01/01/2022");
+		/*String[] nomeHospede = new String[] {"João","José","Joana","Carlos","Gustavo"};
+		String[] sobreNomeHospede = new String[] {"Lucas","Silva","Maria","Eduardo","Moreira"};
+		String[] cpfHospede = new String[] {"123456","123789","456789","789456","987321"};
+		String[] diaNascH = new String[] {"05","10","15","20","25"};
+		String[] mesNascH = new String[] {"01","02","03","05","07"};
+		String[] anoNascH = new String[] {"1990","1985","1995","2000","1980"};*/
 		
-		r1 = hospedagemRepository.save(r1);
-		r2 = hospedagemRepository.save(r2);
-		r3 = hospedagemRepository.save(r3);
-		r4 = hospedagemRepository.save(r4);
+		String[] diaHospeda = new String[] {"05","10","15","20","25"};
+		String[] mesHospeda = new String[] {"01","02","03","05","07"};
+		String[] anoHospeda = new String[] {"2019","2020","2021","2022","2023"};
+		
+		for(int i = 0; i < 100; i++) {
+			
+			hospedagemRepository.save(new Hospedagem(null,quartoRepository.getById(new Random().nextInt(5)+1),hospedeRepository.getById(new Random().nextInt(5)+1),
+					diaHospeda[new Random().nextInt(5)] + "/" + mesHospeda[new Random().nextInt(5)] + "/" + anoHospeda[new Random().nextInt(5)],
+					diaHospeda[new Random().nextInt(5)] + "/" + mesHospeda[new Random().nextInt(5)] + "/" + anoHospeda[new Random().nextInt(5)]));
+		}
+		
+		Hospedagem v1 = new Hospedagem(null, q1, p1, "20/09/2021", "25/09/2021");
+		Hospedagem v2 = new Hospedagem(null, q2, p2, "10/10/2021", "18/10/2021");
+		Hospedagem v3 = new Hospedagem(null, q3, p3, "01/09/2021", "30/09/2021");
+		Hospedagem v4 = new Hospedagem(null, q4, p4, "01/12/2021", "01/01/2022");
+		
+		v1 = hospedagemRepository.save(v1);
+		v2 = hospedagemRepository.save(v2);
+		v3 = hospedagemRepository.save(v3);
+		v4 = hospedagemRepository.save(v4);
+		
+		Regra r1 = regraRepository.save(new Regra("ADMIN"));
+		Regra r2 = regraRepository.save(new Regra("USER"));
+		Regra r3 = regraRepository.save(new Regra("GUEST"));
+
+		List<Regra> regras = new ArrayList<Regra>();
+
+		regras.add(r1);
+		regras.add(r2);
+
+
+		PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		Usuario usu1 = usuarioRepository.save(new Usuario("luiz", "Luiz Martins", encoder.encode("4321"), regras));
+
+		regras = new ArrayList<Regra>();
+
+		regras.add(r2);
+		regras.add(r3);
+
+		Usuario usu2 = usuarioRepository.save(new Usuario("jose", "Jose Silva", encoder.encode("asdf"), regras));
 
 	}
 }

@@ -20,7 +20,7 @@ public class Hospede {
 	private String nmHospede;
 
 	@Column(name="cpf")
-	private Integer cpf;
+	private String cpf;
 	
 	@Column(name="dt_nascimento")
 	private String dtNascimento;
@@ -29,7 +29,7 @@ public class Hospede {
 		super();
 	}
 
-	public Hospede(Integer idHospede, String nmHospede, Integer cpf, String dtNascimento) {
+	public Hospede(Integer idHospede, String nmHospede, String cpf, String dtNascimento) {
 		super();
 		this.idHospede = idHospede;
 		this.nmHospede = nmHospede;
@@ -53,11 +53,11 @@ public class Hospede {
 		this.nmHospede = nmHospede;
 	}
 
-	public Integer getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(Integer cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 
