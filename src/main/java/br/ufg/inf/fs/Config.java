@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import br.ufg.inf.fs.entities.Hospedagem;
 import br.ufg.inf.fs.entities.Hospede;
@@ -25,6 +23,7 @@ import br.ufg.inf.fs.entities.Usuario;
 import br.ufg.inf.fs.repositories.RegraRepository;
 import br.ufg.inf.fs.repositories.UsuarioRepository;
 
+@SuppressWarnings("unused")
 @Configuration
 @Profile("dev")
 public class Config  implements CommandLineRunner{
@@ -41,13 +40,13 @@ public class Config  implements CommandLineRunner{
 	@Autowired
 	private HospedagemRepository hospedagemRepository;
 	
+	@SuppressWarnings("unused")
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
 	@Autowired
 	private RegraRepository regraRepository;
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
@@ -60,7 +59,7 @@ public class Config  implements CommandLineRunner{
 		String[] nomeH = new String[] {"Dos Passados","Das Emas","Dos Imigrantes","Da Alegria","Da cidade"};
 		String[] localH = new String[] {"Goiânia","Anapolis","Brasilia","Trindade","Jatai"};
 		
-		for(int i = 0; i < 100; i++) {
+		for(int i = 0; i < 10; i++) {
 			
 			hoteRepository.save(new Hotel(null,tipoH[new Random().nextInt(5)]+ " " + nomeH[new Random().nextInt(5)],
 								localH[new Random().nextInt(5)],
@@ -94,7 +93,7 @@ public class Config  implements CommandLineRunner{
 		String[] mesNascH = new String[] {"01","02","03","05","07"};
 		String[] anoNascH = new String[] {"1990","1985","1995","2000","1980"};
 		
-		for(int i = 0; i < 100; i++) {
+		for(int i = 0; i < 10; i++) {
 			
 			hospedeRepository.save(new Hospede(null,nomeHospede[new Random().nextInt(5)]+ " " +
 					sobreNomeHospede[new Random().nextInt(5)],cpfHospede[new Random().nextInt(5)],diaNascH[new Random().nextInt(5)] + "/" + mesNascH[new Random().nextInt(5)] + "/" + anoNascH[new Random().nextInt(5)]));
@@ -122,7 +121,7 @@ public class Config  implements CommandLineRunner{
 		String[] mesHospeda = new String[] {"01","02","03","05","07"};
 		String[] anoHospeda = new String[] {"2019","2020","2021","2022","2023"};
 		
-		for(int i = 0; i < 100; i++) {
+		for(int i = 0; i < 10; i++) {
 			
 			hospedagemRepository.save(new Hospedagem(null,quartoRepository.getById(new Random().nextInt(5)+1),hospedeRepository.getById(new Random().nextInt(5)+1),
 					diaHospeda[new Random().nextInt(5)] + "/" + mesHospeda[new Random().nextInt(5)] + "/" + anoHospeda[new Random().nextInt(5)],
@@ -141,6 +140,7 @@ public class Config  implements CommandLineRunner{
 		
 		Regra r1 = regraRepository.save(new Regra("ADMIN"));
 		Regra r2 = regraRepository.save(new Regra("USER"));
+		@SuppressWarnings("unused")
 		Regra r3 = regraRepository.save(new Regra("GUEST"));
 
 		List<Regra> regras = new ArrayList<Regra>();
@@ -148,8 +148,9 @@ public class Config  implements CommandLineRunner{
 		regras.add(r1);
 		regras.add(r2);
 
-
+		/*
 		PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		@SuppressWarnings("unused")
 		Usuario usu1 = usuarioRepository.save(new Usuario("luiz", "Luiz Martins", encoder.encode("4321"), regras));
 
 		regras = new ArrayList<Regra>();
@@ -157,7 +158,8 @@ public class Config  implements CommandLineRunner{
 		regras.add(r2);
 		regras.add(r3);
 
-		Usuario usu2 = usuarioRepository.save(new Usuario("jose", "Jose Silva", encoder.encode("asdf"), regras));
+		@SuppressWarnings("unused")
+		Usuario usu2 = usuarioRepository.save(new Usuario("jose", "Jose Silva", encoder.encode("asdf"), regras));*/
 
 	}
 }
