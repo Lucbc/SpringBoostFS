@@ -40,9 +40,9 @@ public class Config  implements CommandLineRunner{
 	@Autowired
 	private HospedagemRepository hospedagemRepository;
 	
-	@SuppressWarnings("unused")
+	/*@SuppressWarnings("unused")
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private UsuarioRepository usuarioRepository;*/
 
 	@Autowired
 	private RegraRepository regraRepository;
@@ -59,7 +59,7 @@ public class Config  implements CommandLineRunner{
 		String[] nomeH = new String[] {"Dos Passados","Das Emas","Dos Imigrantes","Da Alegria","Da cidade"};
 		String[] localH = new String[] {"Goiânia","Anapolis","Brasilia","Trindade","Jatai"};
 		
-		for(int i = 0; i < 10; i++) {
+		for(int i = 0; i < 15; i++) {
 			
 			hoteRepository.save(new Hotel(null,tipoH[new Random().nextInt(5)]+ " " + nomeH[new Random().nextInt(5)],
 								localH[new Random().nextInt(5)],
@@ -93,7 +93,7 @@ public class Config  implements CommandLineRunner{
 		String[] mesNascH = new String[] {"01","02","03","05","07"};
 		String[] anoNascH = new String[] {"1990","1985","1995","2000","1980"};
 		
-		for(int i = 0; i < 10; i++) {
+		for(int i = 0; i < 15; i++) {
 			
 			hospedeRepository.save(new Hospede(null,nomeHospede[new Random().nextInt(5)]+ " " +
 					sobreNomeHospede[new Random().nextInt(5)],cpfHospede[new Random().nextInt(5)],diaNascH[new Random().nextInt(5)] + "/" + mesNascH[new Random().nextInt(5)] + "/" + anoNascH[new Random().nextInt(5)]));
@@ -121,9 +121,9 @@ public class Config  implements CommandLineRunner{
 		String[] mesHospeda = new String[] {"01","02","03","05","07"};
 		String[] anoHospeda = new String[] {"2019","2020","2021","2022","2023"};
 		
-		for(int i = 0; i < 10; i++) {
+		for(int i = 0; i < 15; i++) {
 			
-			hospedagemRepository.save(new Hospedagem(null,quartoRepository.getById(new Random().nextInt(5)+1),hospedeRepository.getById(new Random().nextInt(5)+1),
+			hospedagemRepository.save(new Hospedagem(null,quartoRepository.getById(new Random().nextInt(4)+1),hospedeRepository.getById(new Random().nextInt(5)+1),
 					diaHospeda[new Random().nextInt(5)] + "/" + mesHospeda[new Random().nextInt(5)] + "/" + anoHospeda[new Random().nextInt(5)],
 					diaHospeda[new Random().nextInt(5)] + "/" + mesHospeda[new Random().nextInt(5)] + "/" + anoHospeda[new Random().nextInt(5)]));
 		}
@@ -140,7 +140,7 @@ public class Config  implements CommandLineRunner{
 		
 		Regra r1 = regraRepository.save(new Regra("ADMIN"));
 		Regra r2 = regraRepository.save(new Regra("USER"));
-		@SuppressWarnings("unused")
+		/*@SuppressWarnings("unused")*/
 		Regra r3 = regraRepository.save(new Regra("GUEST"));
 
 		List<Regra> regras = new ArrayList<Regra>();
