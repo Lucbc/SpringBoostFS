@@ -47,9 +47,6 @@ public class HospedeBusiness {
 	
 	
 	private void validaHospede(Hospede hospede) throws HospedeException {
-		if(hospede.getIdHospede() == null || hospede.getIdHospede() == 0) {
-			throw new HospedeException("0308");
-		}
 		if(hospede.getNmHospede() == null || hospede.getNmHospede().length() == 0) {
 			throw new HospedeException("0309");
 		}
